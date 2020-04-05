@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>cpc js script</title>
+    </head>
+    <body style="justify-content: center; display: flex;">
+        <div style="width: 500px; direction: rtl; height: 250px; padding: 5px; justify-content: center; display: flex; flex-direction: column; background-color: #eee; ">
+            <div style="margin:5px 0">
+                <label> استان :</label>
+                <select style="width: 100%;" id="select_province"></select>
+            </div>
+            <div>
+                <label>شهر :</label>
+                <select style="width: 100%;" id="select_city"></select>
+            </div>
+        </div>
+    </body>
+</html>
+
+
+
+
+<!--jquery-3.4.1-->
+<script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.js"></script>
+<!--cpc js script-->
+<script type="text/javascript" src="../dist/cpc.js"></script>
+
+
+<!--example script-->
+<script>
+    $("#select_province").change(function () {
+        var province_id = $(this).find(":selected").attr("data-provinces-id");
+        add_city(parseInt(province_id));
+    });
+
+    add_provinces();
+
+    function add_provinces() {
+        var iran = countries[0];
+        var provinces_name;
+        var provinces_id;
+        for (i = 0; i < provinces.length; i++) {
+            provinces_name = provinces[i].name;
+            provinces_id = provinces[i].id;
+            $("#select_province").append("<option data-provinces-id=" + provinces_id + ">" + provinces_name + "</option>");
+        }
+    }
+    function add_city(provinces) {
+        var options;
+        for (j = 0; j < cities.length; j++) {
+            if (cities[j].province === provinces) {
+                options += "<option data-city-id=" + cities[j].id + ">" + cities[j].name + "</option>";
+                $("#select_city").html(options);
+            }
+        }
+    }
+</script>
